@@ -1,11 +1,5 @@
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,10 +10,13 @@ public class CalculadoraTemperatura {
     private JComboBox<String> comboBox2;
 
     public CalculadoraTemperatura() {
-        // Cria uma janela Swing com FlowLayout
+        // Cria uma janela Swing
         JFrame frame = new JFrame("Conversor de Temperaturas");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new BorderLayout());
+
+        // Painel para organizar os componentes usando GridLayout
+        JPanel panel = new JPanel(new GridLayout(0, 1)); // Uma coluna, várias linhas
 
         text = new JTextField(10);
         resultadoLabel = new JLabel("Resultado: ");
@@ -34,7 +31,6 @@ public class CalculadoraTemperatura {
 
         // Botão de conversão
         JButton converterButton = new JButton("Converter");
-
         converterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,13 +38,32 @@ public class CalculadoraTemperatura {
             }
         });
 
-        // Adiciona componentes à janela
-        frame.add(new JLabel("Valor: "));
-        frame.add(text);
-        frame.add(comboBox1);
-        frame.add(comboBox2);
-        frame.add(converterButton);
-        frame.add(resultadoLabel);
+        // Botão "Apagar"
+        JButton apagarButton = new JButton("Apagar");
+        apagarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                text.setText(""); // Limpa o campo de texto
+                resultadoLabel.setText("Resultado: "); // Redefine o rótulo de resultado
+            }
+        });
+
+        // Painel para botões
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(converterButton);
+        buttonPanel.add(apagarButton);
+
+        // Adiciona componentes ao painel principal
+        panel.add(new JLabel("Valor: "));
+        panel.add(text);
+        panel.add(comboBox1);
+        panel.add(comboBox2);
+        panel.add(buttonPanel); // Adiciona o painel de botões
+        panel.add(resultadoLabel);
+
+        // Adiciona o painel à janela
+        frame.add(panel, BorderLayout.CENTER);
 
         // Configurações finais da janela
         frame.pack();
@@ -110,5 +125,5 @@ public class CalculadoraTemperatura {
         return valor;
     }
 
-   
+    
 }
