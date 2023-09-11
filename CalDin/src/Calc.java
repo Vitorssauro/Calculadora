@@ -1,30 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Calc {
+public class Calc extends JPanel{
 
     public Calc() {
         // Criando JFrame
-        JFrame janelaP = new JFrame("Conversor de Moeda");
-        janelaP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janelaP.setBounds(800, 450, 350, 150);
+        this.setBounds(800, 450, 350, 150);
 
         // panel primeira linha
-        Panel a = new Panel();
-        janelaP.getContentPane().add(a);
+        JPanel a = new JPanel();
+        this.add(a);
 
-        // panel segunda linha
-        Panel b = new Panel();
-        janelaP.getContentPane().add(b);
+        // JPanel segunda linha
+        JPanel b = new JPanel();
+        this.add(b);
 
-        // panel só pro botão
-        Panel but = new Panel();
-        janelaP.getContentPane().add(but);
+        // JPanel só pro botão
+        JPanel but = new JPanel();
+        this.add(but);
 
 
         // setando o Layout
         GridLayout grid = new GridLayout(3, 3);
-        janelaP.setLayout(grid);// atribui o layout
+        this.setLayout(grid);// atribui o layout
 
         // Criar a label temperatura
         JLabel texto = new JLabel("Moeda : ");
@@ -61,6 +59,6 @@ public class Calc {
         but.add(button);
 
         // Configura a janela para ser visível
-        janelaP.setVisible(true);
+        this.setVisible(true);
     }
 }
