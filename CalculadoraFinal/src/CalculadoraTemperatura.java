@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.border.Border;
 
 public class CalculadoraTemperatura extends JPanel {
     private JTextField valorTextField;
@@ -12,15 +11,13 @@ public class CalculadoraTemperatura extends JPanel {
     public CalculadoraTemperatura() {
         // Configurar o layout do painel principal
         setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints(); // Define configurações de posicionamento
+        GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento interno
 
         // Título em Arial
         JLabel tituloLabel = new JLabel("Conversor de Temperaturas");
         Font tituloFonte = new Font("Arial", Font.BOLD, 16);
         tituloLabel.setFont(tituloFonte);
-
-        // Configurações para o título
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 0; // Linha 0
         gbc.gridwidth = 2; // Ocupa 2 colunas
@@ -33,28 +30,17 @@ public class CalculadoraTemperatura extends JPanel {
         escalaOrigemComboBox = new JComboBox<>(new String[]{"Celsius", "Fahrenheit", "Kelvin"});
         JLabel converterLabel = new JLabel("Converter para:");
         escalaDestinoComboBox = new JComboBox<>(new String[]{"Celsius", "Fahrenheit", "Kelvin"});
+        // Criação dos botões "Converter" e "Limpar"
+JButton converterButton = new JButton("Converter");
+JButton limparButton = new JButton("Limpar");
 
-        JButton converterButton = new JButton("Converter");
-        JButton limparButton = new JButton("Limpar");
-
-        // Aplicar estilo aos botões 
-        Font botaoFonte = new Font("Arial", Font.PLAIN, 16);
-        converterButton.setFont(botaoFonte);
-        limparButton.setFont(botaoFonte);
-
-        // Definir largura preferencial para os botões (mesmo tamanho)
-        Dimension botaoDimension = new Dimension(100, 30); // Largura: 100 pixels, Altura: 30 pixels
-        converterButton.setPreferredSize(botaoDimension);
-        limparButton.setPreferredSize(botaoDimension);
-
-        // Adicionar borda aos botões
-        Border border = BorderFactory.createLineBorder(Color.BLACK);
-        converterButton.setBorder(border);
-        limparButton.setBorder(border);
+// Definir largura preferencial para os botões
+converterButton.setPreferredSize(new Dimension(50, 30)); // Largura: 150 pixels, Altura: 30 pixels
+limparButton.setPreferredSize(new Dimension(150, 30));    // Largura: 150 pixels, Altura: 30 pixels
 
         valorTextField = new JTextField("0.0", 10);
 
-        // Configurações para os campos e rótulos
+        // Configuração das posições dos componentes usando GridBagConstraints
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 1; // Linha 1
         gbc.gridwidth = 1; // Ocupa 1 coluna
@@ -88,20 +74,18 @@ public class CalculadoraTemperatura extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL; // Preenchimento horizontal
         add(escalaDestinoComboBox, gbc);
 
-        // Painel para os botões Converter e Limpar
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Centraliza os botões
-
-        // Adicione os botões ao painel
-        buttonPanel.add(converterButton);
-        buttonPanel.add(limparButton);
-
-        // Configurações para o painel de botões
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 4; // Linha 4
         gbc.gridwidth = 3; // Ocupa 3 colunas
-        gbc.fill = GridBagConstraints.NONE; // Sem preenchimento
-        add(buttonPanel, gbc);
+        add(converterButton, gbc);
 
+        // Configuração do botão "Limpar"
+        gbc.gridx = 1; // Coluna 1
+        gbc.gridy = 5; // Linha 5
+        gbc.gridwidth = 2; // Ocupa 2 colunas
+        add(limparButton, gbc);
+
+        // Configuração da ação do botão "Converter"
         converterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,6 +93,7 @@ public class CalculadoraTemperatura extends JPanel {
             }
         });
 
+        // Configuração da ação do botão "Limpar"
         limparButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -168,3 +153,4 @@ public class CalculadoraTemperatura extends JPanel {
         escalaDestinoComboBox.setSelectedIndex(0);
     }
 }
+
