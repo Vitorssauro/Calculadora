@@ -3,126 +3,97 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CalculadoraTemperatura {
-    private JTextField text;
-    private JLabel resultadoLabel;
-    private JComboBox<String> comboBox1;
-    private JComboBox<String> comboBox2;
+public class CalculadoraTemperatura extends JPanel {
+    private JTextField valorTextField;
+    private JComboBox<String> escalaOrigemComboBox;
+    private JComboBox<String> escalaDestinoComboBox;
 
     public CalculadoraTemperatura() {
-        // Cria uma janela Swing
-        JFrame frame = new JFrame("Conversor de Temperaturas");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        // Configurar o layout do painel principal
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento interno
 
-        // Painel para organizar os componentes usando GridLayout
-        JPanel panel = new JPanel(new GridLayout(0, 1)); // Uma coluna, várias linhas
+        // Label e campo de valor
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.EAST; // Alinhamento à direita
+        add(new JLabel("Valor:"), gbc);
 
-        text = new JTextField(10);
-        resultadoLabel = new JLabel("Resultado: ");
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Preenchimento horizontal
+        gbc.weightx = 1.0; // Peso horizontal (expansão)
+        valorTextField = new JTextField("0.0", 10);
+        add(valorTextField, gbc);
 
-        // ComboBox 1 para escolher a escala de temperatura de origem
-        String[] escalas1 = {"Celsius", "Fahrenheit", "Kelvin"};
-        comboBox1 = new JComboBox<>(escalas1);
+        // Label e combobox de escala de origem
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.EAST;
+        add(new JLabel("Escala de Origem:"), gbc);
 
-        // ComboBox 2 para escolher a escala de temperatura de destino
-        String[] escalas2 = {"Celsius", "Fahrenheit", "Kelvin"};
-        comboBox2 = new JComboBox<>(escalas2);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        escalaOrigemComboBox = new JComboBox<>(new String[]{"Celsius", "Fahrenheit", "Kelvin"});
+        add(escalaOrigemComboBox, gbc);
+
+        // Label e combobox de escala de destino
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        add(new JLabel("Converter para:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        escalaDestinoComboBox = new JComboBox<>(new String[]{"Celsius", "Fahrenheit", "Kelvin"});
+        add(escalaDestinoComboBox, gbc);
 
         // Botão de conversão
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2; // Ocupa 2 colunas
+        gbc.fill = GridBagConstraints.NONE; // Sem preenchimento
+        gbc.anchor = GridBagConstraints.CENTER; // Alinhamento central
         JButton converterButton = new JButton("Converter");
+        add(converterButton, gbc);
+
+        // Configurando ação para o botão de conversão
         converterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 converterTemperatura();
             }
         });
-
-        // Botão "Apagar"
-        JButton apagarButton = new JButton("Apagar");
-        apagarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                text.setText(""); // Limpa o campo de texto
-                resultadoLabel.setText("Resultado: "); // Redefine o rótulo de resultado
-            }
-        });
-
-        // Painel para botões
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.add(converterButton);
-        buttonPanel.add(apagarButton);
-
-        // Adiciona componentes ao painel principal
-        panel.add(new JLabel("Valor: "));
-        panel.add(text);
-        panel.add(comboBox1);
-        panel.add(comboBox2);
-        panel.add(buttonPanel); // Adiciona o painel de botões
-        panel.add(resultadoLabel);
-
-        // Adiciona o painel à janela
-        frame.add(panel, BorderLayout.CENTER);
-
-        // Configurações finais da janela
-        frame.pack();
-        frame.setVisible(true);
     }
 
+    // Método para converter temperatura
     private void converterTemperatura() {
         try {
-            double valorInserido = Double.parseDouble(text.getText());
-            double resultado = 0.0;
-            String escalaSelecionada1 = (String) comboBox1.getSelectedItem();
-            String escalaSelecionada2 = (String) comboBox2.getSelectedItem();
+            double valorInserido = Double.parseDouble(valorTextField.getText());
+            String escalaOrigem = (String) escalaOrigemComboBox.getSelectedItem();
+            String escalaDestino = (String) escalaDestinoComboBox.getSelectedItem();
+            double resultado = calcularConversao(valorInserido, escalaOrigem, escalaDestino);
 
-            if (escalaSelecionada1.equals(escalaSelecionada2)) {
-                resultadoLabel.setText("Resultado: " + valorInserido);
-                return;
-            }
-
-            // Converte a temperatura da escala de origem para a escala de destino
-            if (escalaSelecionada1.equals("Celsius")) {
-                resultado = converterCelsius(valorInserido, escalaSelecionada2);
-            } else if (escalaSelecionada1.equals("Fahrenheit")) {
-                resultado = converterFahrenheit(valorInserido, escalaSelecionada2);
-            } else if (escalaSelecionada1.equals("Kelvin")) {
-                resultado = converterKelvin(valorInserido, escalaSelecionada2);
-            }
-
-            resultadoLabel.setText("Resultado: " + resultado);
+            // Mostrar o resultado em uma nova janela de diálogo
+            JOptionPane.showMessageDialog(this, "Resultado: " + resultado, "Resultado da Conversão", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(resultadoLabel, "Insira um valor válido.");
+            JOptionPane.showMessageDialog(this, "Insira um valor válido.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // Funções de conversão de temperatura
-    private double converterCelsius(double valor, String escalaDestino) {
-        if (escalaDestino.equals("Fahrenheit")) {
+    // Função para calcular a conversão de temperatura
+    private double calcularConversao(double valor, String escalaOrigem, String escalaDestino) {
+        // Adicione aqui suas fórmulas de conversão de temperatura
+        // Por exemplo:
+        if (escalaOrigem.equals("Celsius") && escalaDestino.equals("Fahrenheit")) {
             return (valor * 9 / 5) + 32;
-        } else if (escalaDestino.equals("Kelvin")) {
+        } else if (escalaOrigem.equals("Fahrenheit") && escalaDestino.equals("Celsius")) {
+            return (valor - 32) * 5 / 9;
+        } else if (escalaOrigem.equals("Celsius") && escalaDestino.equals("Kelvin")) {
             return valor + 273.15;
         }
-        return valor;
-    }
-
-    private double converterFahrenheit(double valor, String escalaDestino) {
-        if (escalaDestino.equals("Celsius")) {
-            return (valor - 32) * 5 / 9;
-        } else if (escalaDestino.equals("Kelvin")) {
-            return (valor - 32) * 5 / 9 + 273.15;
-        }
-        return valor;
-    }
-
-    private double converterKelvin(double valor, String escalaDestino) {
-        if (escalaDestino.equals("Celsius")) {
-            return valor - 273.15;
-        } else if (escalaDestino.equals("Fahrenheit")) {
-            return (valor - 273.15) * 9 / 5 + 32;
-        }
-        return valor;
+        // Adicione mais casos conforme necessário
+        return valor; // Retorna o mesmo valor se as escalas forem iguais
     }
 
     
