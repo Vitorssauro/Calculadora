@@ -5,7 +5,12 @@ public class Calc extends JPanel{
 
     public Calc() {
         // Criando JFrame
-        this.setBounds(800, 450, 350, 150);
+        this.setBounds(600, 100, 350, 150);
+
+        JLabel title = new JLabel("CALCULADORA DE MOEDA");
+        this.add(title);
+        
+        title.setHorizontalAlignment(SwingConstants.CENTER);
 
         // panel primeira linha
         JPanel a = new JPanel();
@@ -21,7 +26,7 @@ public class Calc extends JPanel{
 
 
         // setando o Layout
-        GridLayout grid = new GridLayout(3, 3);
+        GridLayout grid = new GridLayout(5,1);
         this.setLayout(grid);// atribui o layout
 
         // Criar a label temperatura
@@ -43,14 +48,14 @@ public class Calc extends JPanel{
         a.add(comboBox1);
 
         // separador simples
-        JLabel barra = new JLabel("  //  ");
+        JLabel barra = new JLabel("  ==>  ");
 
         // Cria um botão JButton
-        JButton button = new JButton("  Converter");
+        JButton button = new JButton(" Converter ");
 
         // texto para digitar as temperaturasValor
-        JTextField tempTexto1 = new JTextField(" Valor ", 10);
-        JTextField tempTexto2 = new JTextField(" Valor ", 10);
+        JTextField tempTexto1 = new JTextField(" 0,00 ", 10);
+        JTextField tempTexto2 = new JTextField(" 0,00 ", 10);
 
         b.add(tempTexto1);
         b.add(barra);
