@@ -10,14 +10,19 @@ public class CalculadoraTemperatura extends JPanel {
 
     public CalculadoraTemperatura() {
         // Configurar o layout do painel principal
+        setBackground(Color.WHITE); // Define o fundo como branco
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento interno
 
-        // Título em Arial
+        // Título em Arial com cor de fundo
         JLabel tituloLabel = new JLabel("Conversor de Temperaturas");
         Font tituloFonte = new Font("Arial", Font.BOLD, 16);
         tituloLabel.setFont(tituloFonte);
+        tituloLabel.setOpaque(true); // Permite definir a cor de fundo
+        tituloLabel.setBackground(Color.BLUE); // Define a cor de fundo
+        tituloLabel.setForeground(Color.WHITE); // Define a cor do texto
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 0; // Linha 0
         gbc.gridwidth = 2; // Ocupa 2 colunas
@@ -30,13 +35,18 @@ public class CalculadoraTemperatura extends JPanel {
         escalaOrigemComboBox = new JComboBox<>(new String[]{"Celsius", "Fahrenheit", "Kelvin"});
         JLabel converterLabel = new JLabel("Converter para:");
         escalaDestinoComboBox = new JComboBox<>(new String[]{"Celsius", "Fahrenheit", "Kelvin"});
-        // Criação dos botões "Converter" e "Limpar"
-JButton converterButton = new JButton("Converter");
-JButton limparButton = new JButton("Limpar");
 
-// Definir largura preferencial para os botões
-converterButton.setPreferredSize(new Dimension(50, 30)); // Largura: 150 pixels, Altura: 30 pixels
-limparButton.setPreferredSize(new Dimension(150, 30));    // Largura: 150 pixels, Altura: 30 pixels
+        // Botão "Converter" com cores de fundo e texto personalizados
+        JButton converterButton = new JButton("Converter");
+        converterButton.setBackground(Color.BLACK); // Define a cor de fundo do botão
+        converterButton.setForeground(Color.WHITE); // Define a cor do texto do botão
+        converterButton.setPreferredSize(new Dimension(150, 30)); // Define o tamanho do botão
+
+        // Botão "Limpar" com cores de fundo e texto personalizados
+        JButton limparButton = new JButton("Limpar");
+        limparButton.setBackground(Color.RED); // Define a cor de fundo do botão
+        limparButton.setForeground(Color.WHITE); // Define a cor do texto do botão
+        limparButton.setPreferredSize(new Dimension(150, 30)); // Define o tamanho do botão
 
         valorTextField = new JTextField("0.0", 10);
 
@@ -76,13 +86,14 @@ limparButton.setPreferredSize(new Dimension(150, 30));    // Largura: 150 pixels
 
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 4; // Linha 4
-        gbc.gridwidth = 3; // Ocupa 3 colunas
+        gbc.gridwidth = 1; // Ocupa 1 coluna
+        gbc.fill = GridBagConstraints.NONE; // Sem preenchimento
         add(converterButton, gbc);
 
-        // Configuração do botão "Limpar"
         gbc.gridx = 1; // Coluna 1
-        gbc.gridy = 5; // Linha 5
-        gbc.gridwidth = 2; // Ocupa 2 colunas
+        gbc.gridy = 4; // Linha 4
+        gbc.gridwidth = 1; // Ocupa 1 coluna
+        gbc.fill = GridBagConstraints.NONE; // Sem preenchimento
         add(limparButton, gbc);
 
         // Configuração da ação do botão "Converter"
@@ -152,5 +163,17 @@ limparButton.setPreferredSize(new Dimension(150, 30));    // Largura: 150 pixels
         escalaOrigemComboBox.setSelectedIndex(0);
         escalaDestinoComboBox.setSelectedIndex(0);
     }
-}
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("Calculadora de Temperatura");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(new CalculadoraTemperatura());
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+}
