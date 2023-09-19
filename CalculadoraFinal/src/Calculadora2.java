@@ -14,7 +14,7 @@ public class Calculadora2 extends JPanel {
         
 
         JLabel titleLabel = new JLabel("Calculadora de Tempo");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         gbc.gridx = 0; // Aqui ele específica em qual coluna o componente será colocado
         gbc.gridy = 0;
         gbc.gridwidth = 5;

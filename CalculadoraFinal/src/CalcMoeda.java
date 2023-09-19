@@ -10,6 +10,8 @@ public class CalcMoeda extends JPanel {
         this.setBounds(600, 100, 350, 150);
 
         JLabel title = new JLabel("CALCULADORA DE MOEDA");
+        Font tituloFonte = new Font("Arial", Font.BOLD, 16);
+        title.setFont(tituloFonte);
         this.add(title);
 
         title.setHorizontalAlignment(SwingConstants.CENTER);
