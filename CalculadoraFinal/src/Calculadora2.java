@@ -68,6 +68,7 @@ public class Calculadora2 extends JPanel {
 
         JButton limparButton = new JButton("Limpar"); // Aqui adicionei um Botão de Limpar
         limparButton.setFont(new Font("Arial", Font.PLAIN, 16)); // Usei  uma fonte "Arial", e de um tamanho 16
+    
         limparButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 textFieldHora.setText(""); // Aqui são as colunas de texto para digitar
@@ -75,7 +76,7 @@ public class Calculadora2 extends JPanel {
                 textFieldSegundo.setText(""); // Aqui são as colunas de texto para digitar
             }
         });
-
+        
         //set do panel 
         buttonPanel.add(converterButton);
         buttonPanel.add(limparButton);
@@ -83,6 +84,14 @@ public class Calculadora2 extends JPanel {
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         this.add(buttonPanel, gbc);
+   
+converterButton.setBackground(Color.BLUE); // Define a cor de fundo do botão "Converter" como amarelo
+converterButton.setForeground(Color.WHITE); // Define a cor do texto do botão "Converter" como preto
+limparButton.setBackground(Color.RED); // Define a cor de fundo do botão "Limpar" como laranja
+limparButton.setForeground(Color.WHITE); // Define a cor do texto do botão "Limpar" como preto
+ // Personalizar o fundo do painel principal
+ this.setBackground(Color.white);
+buttonPanel.setBackground(Color.WHITE);
     }
 
 
