@@ -92,6 +92,7 @@ limparButton.setForeground(Color.WHITE); // Define a cor do texto do botão "Lim
  // Personalizar o fundo do painel principal
  this.setBackground(Color.white);
 buttonPanel.setBackground(Color.WHITE);
+panel.setBackground(Color.WHITE);
     }
 
 
